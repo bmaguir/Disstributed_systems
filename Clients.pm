@@ -16,17 +16,22 @@ sub add_items
  sub new 
  {
 	my $class = shift;
-	my %options = @_;
-	
 	
 	my $self = 
 	{
-		color => 'blue', 
-		%options,
-		items => [],
+		JOINED_CHATROOM => shift, 
+		CLIENT_IP=> shift,
+		PORT => shift,
+		CLIENT_NAME => shift,
 	};
 	bless($self, $class);
 	return($self);
+}
+
+sub getFName
+{
+	my( $self ) = @_;
+	return $self->{fname};
 }
 
 sub color 

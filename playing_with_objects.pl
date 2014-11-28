@@ -2,6 +2,7 @@ use warnings;
 use strict;
 use Clients;
 
-my $bag = Clients->new(color => "red");
+my $Client = new Clients ("THE chat room","0", "0", "derp");
 
-print $bag-> color;
+print &$Client{PORT};
+#print $Client-> getFName;
