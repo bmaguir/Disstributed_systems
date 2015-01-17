@@ -1,14 +1,17 @@
 use IO::Socket;
 
-while(true){
+#while(true){
 
-	print "please enter the message you wish to send \n";
-	#takes a line from the keyboard 
-	$msg=<STDIN>;
-	if($msg eq "end\n"){
-		exit(0);
-	}
-	
+#	print "please enter the message you wish to send \n";
+#	#takes a line from the keyboard 
+#	$msg=<STDIN>;
+#	if($msg eq "end\n"){
+#		exit(0);
+#	}
+	$msg = "JOIN_CHATROOM: [DaBois]
+CLIENT_IP: [0]
+PORT: [0]
+CLIENT_NAME: [dicky]";
 	my $socket = IO::Socket::INET->new(
 		PeerAddr =>'localhost',
 		PeerPort => '500',
@@ -17,11 +20,11 @@ while(true){
 
 	print ($socket $msg);
 	shutdown($socket, 1);
-	my $recv_line;
+#	my $recv_line;
 	#prints out what is received from the server
-	while ($recv_line = <$socket>){
-		print "$recv_line\n";
-	}
+#	while ($recv_line = <$socket>){
+#		print "$recv_line\n";
+#	}
 
 	close $socket;
-}
+#}

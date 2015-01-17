@@ -23,20 +23,26 @@ sub add_items
 		CLIENT_IP=> shift,
 		PORT => shift,
 		CLIENT_NAME => shift,
+		JOIN_ID => shift,
 	};
 	bless($self, $class);
 	return($self);
 }
 
-sub getFName
+sub getJOIN_ID
 {
 	my( $self ) = @_;
-	return $self->{fname};
+	return $self->{JOIN_ID};
+}
+sub getJOINED_CHATROOM
+{
+	my( $self ) = @_;
+	return $self->{JOINED_CHATROOM};
 }
 
-sub color 
+sub getCLIENT_NAME
 {
-	my $self = shift;
-	return $self->{color};
+	my( $self ) = @_;
+	return $self->{CLIENT_NAME};
 }
 1;

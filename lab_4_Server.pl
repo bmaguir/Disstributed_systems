@@ -1,7 +1,14 @@
  use Thread;
  use warnings;
- use strict;
+ #use strict;
  use IO::Socket;
+ use Clients;
+ use threads::shared;
+
+ my $join_id :shared=();
+ $join_id= 0;
+ my @Client_list :shared=();
+ my @ChatRoom_List :shared=();
  
 	my $port = $ARGV[0];
 	$socket = IO::Socket::INET->new(
@@ -32,15 +39,12 @@
 
 
 	sub sub1 { 
-		$msg;
 		my $thread_socket = $_[0];
-		print "in new thread\n";
-		$thread_socket-> recv($msg, 50, 0);
+		$thread_socket-> recv($msg, 1000, 0);
 		#while(<$thread_socket>) {
 		#	$msg = $_;
 		#	print "$_\n";
 		#}
-		print "read new message\n";
 		if($msg eq "KILL_SERVICE\n"){
 			print $msg;
 			close(thread_socket);
@@ -57,9 +61,26 @@
 			}
 			else
 			{
-				print "client said $msg";
-				print($thread_socket "ack");
-				close($thread_socket);
+				if(substr($msg,0,14) eq "JOIN_CHATROOM:")
+				{
+					print "making new client";
+					#splits $msg into [] segments
+					my @lines = $msg =~ /( \[ (?: [^[]]* | (?0) )* \] )/xg;
+					foreach my $line (@lines)
+						{
+						$line = substr $line, 1, -1;	#remove [] brakets
+						}
+					$join_id++;
+					push (@Client_list, {$join_id,$lines[3]});
+					push @ChatRoom_List, $lines[3];
+					print $Client_list[0];
+				}
+				else
+				{
+					print "client said $msg";
+					print($thread_socket "ack");
+					close($thread_socket);
+				}
 			}
 		}
 	}
