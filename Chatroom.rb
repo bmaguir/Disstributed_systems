@@ -19,10 +19,10 @@ class Chatroom
 	end
 	
 	def add_user(user)
-		puts "adding user"
+		#puts "adding user"
 		@@users<< user
 		@@no_of_users = @@no_of_users + 1
-		puts "added user"
+		#puts "added user"
 	end
 	
 	def get_no_of_users
@@ -33,16 +33,17 @@ class Chatroom
 	return @@name
 	end
 	
-	def send_message
-	
+	def send_message (msg)
+		puts "sending message " + msg
+		@@users.each do |u|
+			u.get_socket.puts msg + "\n\r\n"
+		end
 	end
 	
 	def remove_user(user_id)
 		puts "removing user " + user_id.to_s
 		for i in 0 .. @@users.length
 			if @@users[i] == user_id
-				@@users[i].get_socket.puts "Closing the connection. Bye!"
-				@@users[i].get_socket.close
 				@@users.delete(i)
 			end
 		end
